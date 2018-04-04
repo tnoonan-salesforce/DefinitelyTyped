@@ -79,7 +79,7 @@ salesforceConnection.query('SELECT Id FROM Account')
     .on('end', (query: any) => {
         console.log(records);
     })
-    .on('error', (error) => {
+    .on('error', (error: Error) => {
         console.log('Error returned from query:', error);
     })
     .run({ autoFetch: true, maxFetch: 25 });
@@ -89,3 +89,10 @@ salesforceConnection.sobject<any>('Coverage__c')
 
 salesforceConnection.sobject<any>('Coverage__c')
     .select(['Id', 'Name']).del("test", () => { });
+
+(async () => {
+    const query2: sf.QueryResult<object> =
+        await (salesforceConnection.query("SELECT Id, Name FROM User") as Promise<sf.QueryResult<object>>);
+    console.log("Query Promise: total in database: " + query2.totalSize);
+    console.log("Query Promise: total fetched : " + query2.records[0]);
+})();

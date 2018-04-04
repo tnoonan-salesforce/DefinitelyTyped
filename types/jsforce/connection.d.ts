@@ -67,16 +67,24 @@ export type ConnectionEvent = "refresh";
 export abstract class BaseConnection {
     _baseUrl(): string;
     request(info: RequestInfo | string, options?: Object, callback?: (err: Error, Object: object) => void): Promise<Object>;
-    query<T>(soql: string, options?: object, callback?: (err: Error, result: QueryResult<T>) => void): Promise<QueryResult<T>>;
+    query<T>(soql: string, callback?: (err: Error, result: QueryResult<T>) => void): Query<QueryResult<T>>;
     queryMore<T>(locator: string, options?: object, callback?: (err: Error, result: QueryResult<T>) => void): Promise<QueryResult<T>>;
-    create<T>(type: string, records: Record<T>|Array<Record<T>>, options?: Object, callback?: (err: Error, result: RecordResult | Array<RecordResult>) => void): Promise<(RecordResult | Array<RecordResult>)>;
-    insert<T>(type: string, records: Record<T>|Array<Record<T>>, options?: Object, callback?: (err: Error, result: RecordResult | Array<RecordResult>) => void): Promise<(RecordResult | Array<RecordResult>)>;
-    retrieve<T>(type: string, ids: string|Array<string>, options?: Object, callback?: (err: Error, result: Record<T> | Array<Record<T>>) => void): Promise<(Record<T> | Array<Record<T>>)>;
-    update<T>(type: string, records: Record<T>|Array<Record<T>>, options?: Object, callback?: (err: Error, result: RecordResult | Array<RecordResult>) => void): Promise<(RecordResult | Array<RecordResult>)>;
-    upsert<T>(type: string, records: Record<T>|Array<Record<T>>, extIdField: string, options?: Object, callback?: (err: Error, result: RecordResult | Array<RecordResult>) => void): Promise<(RecordResult | Array<RecordResult>)>;
-    del<T>(type: string, ids: string|Array<string>, options?: Object, callback?: (err: Error, result: RecordResult | Array<RecordResult>) => void): Promise<(RecordResult | Array<RecordResult>)>;
-    delete<T>(type: string, ids: string|Array<string>, options?: Object, callback?: (err: Error, result: RecordResult | Array<RecordResult>) => void): Promise<(RecordResult | Array<RecordResult>)>;
-    destroy<T>(type: string, ids: string|Array<string>, options?: Object, callback?: (err: Error, result: RecordResult | Array<RecordResult>) => void): Promise<(RecordResult | Array<RecordResult>)>;
+    create<T>(type: string, records: Record<T>|Array<Record<T>>, options?: Object,
+        callback?: (err: Error, result: RecordResult | RecordResult[]) => void): Promise<(RecordResult | RecordResult[])>;
+    insert<T>(type: string, records: Record<T>|Array<Record<T>>, options?: Object,
+        callback?: (err: Error, result: RecordResult | RecordResult[]) => void): Promise<(RecordResult | RecordResult[])>;
+    retrieve<T>(type: string, ids: string|string[], options?: Object,
+        callback?: (err: Error, result: Record<T> | Array<Record<T>>) => void): Promise<(Record<T> | Array<Record<T>>)>;
+    update<T>(type: string, records: Record<T>|Array<Record<T>>, options?: Object,
+        callback?: (err: Error, result: RecordResult | Array<Record<T>>) => void): Promise<(RecordResult | RecordResult[])>;
+    upsert<T>(type: string, records: Record<T>|Array<Record<T>>, extIdField: string, options?: Object,
+        callback?: (err: Error, result: RecordResult | RecordResult[]) => void): Promise<(RecordResult | RecordResult[])>;
+    del<T>(type: string, ids: string|string[], options?: Object,
+        callback?: (err: Error, result: RecordResult | RecordResult[]) => void): Promise<(RecordResult | RecordResult[])>;
+    delete<T>(type: string, ids: string|string[], options?: Object,
+        callback?: (err: Error, result: RecordResult | RecordResult[]) => void): Promise<(RecordResult | RecordResult[])>;
+    destroy<T>(type: string, ids: string|string[], options?: Object,
+        callback?: (err: Error, result: RecordResult | RecordResult[]) => void): Promise<(RecordResult | RecordResult[])>;
     describe<T>(type: string, callback?: (err: Error, result: DescribeSObjectResult) => void): Promise<DescribeSObjectResult>;
     describeGlobal<T>(callback?: (err: Error, result: DescribeGlobalResult) => void): Promise<DescribeGlobalResult>;
     sobject<T>(resource: string): SObject<T>;
@@ -103,8 +111,8 @@ export class Connection extends BaseConnection {
 }
 
 export class Tooling extends BaseConnection {
-    public _logger: object;
+    _logger: object;
 
     // Specific to tooling
-    executeAnonymous(body: string, callback?: (err: Error, res: any) => void): Promise<any>
+    executeAnonymous(body: string, callback?: (err: Error, res: any) => void): Promise<any>;
 }
