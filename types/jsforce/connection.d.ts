@@ -1,9 +1,11 @@
 import { SObjectCreateOptions } from './create-options';
+import { EventEmitter } from 'events';
 import { DescribeSObjectResult, DescribeGlobalResult } from './describe-result';
 import { Query, QueryResult } from './query';
 import { Record } from './record';
 import { RecordResult } from './record-result';
 import { SObject } from './salesforce-object';
+import { Analytics } from './analytics';
 
 // These are pulled out because according to http://jsforce.github.io/jsforce/doc/connection.js.html#line49
 // the oauth options can either be in the `oauth2` proeprty OR spread across the main connection
@@ -43,6 +45,24 @@ export interface UserInfo {
     url: string;
 }
 
+export abstract class RestApi {
+    get(path: string, options: object, callback: () => object): Promise<object>;
+    post(path: string, body: object, options: object, callback: () => object): Promise<object>;
+    put(path: string, body: object, options: object, callback: () => object): Promise<object>;
+    patch(path: string, body: object, options: object, callback: () => object): Promise<object>;
+    del(path: string, options: object, callback: () => object): Promise<object>;
+}
+
+export abstract class Apex extends RestApi {}
+
+export class Streaming {}
+export class Bulk {}
+export class Chatter {}
+export class Metadata {}
+export class SoapApi {}
+export class Process {}
+export class Cache {}
+
 export type ConnectionEvent = "refresh";
 
 /**
@@ -64,7 +84,7 @@ export type ConnectionEvent = "refresh";
  *
  * to ensure that you have the correct data types for the various collection names.
  */
-export abstract class BaseConnection {
+export abstract class BaseConnection extends EventEmitter {
     _baseUrl(): string;
     request(info: RequestInfo | string, options?: Object, callback?: (err: Error, Object: object) => void): Promise<Object>;
     query<T>(soql: string, callback?: (err: Error, result: QueryResult<T>) => void): Query<QueryResult<T>>;
@@ -93,11 +113,22 @@ export abstract class BaseConnection {
 export class Connection extends BaseConnection {
     constructor(params: ConnectionOptions)
 
+    streaming: Streaming;
+    bulk: Bulk;
+    tooling: Tooling;
+    analytics: Analytics;
+    chatter: Chatter;
+    metadata: Metadata;
+    soap: SoapApi;
+    apex: Apex;
+    process: Process;
+    cache: Cache;
+
+    _logger: object;
     // Specific to Connection
     instanceUrl: string;
     version: string;
     accessToken: string;
-    tooling: Tooling;
     initialize(options?: ConnectionOptions): void;
     queryAll<T>(soql: string, options?: object, callback?: (err: Error, result: QueryResult<T>) => void): Query<QueryResult<T>>;
     authorize(code: string, callback?: (err: Error, res: UserInfo) => void): Promise<UserInfo>;
@@ -107,12 +138,9 @@ export class Connection extends BaseConnection {
     logout(callback?: (err: Error, res: undefined) => void): Promise<void>;
     logoutByOAuth2(callback?: (err: Error, res: undefined) => void): Promise<void>;
     logoutBySoap(callback?: (err: Error, res: undefined) => void): Promise<void>;
-    on(eventName: ConnectionEvent, callback: Function): void;
 }
 
 export class Tooling extends BaseConnection {
-    _logger: object;
-
     // Specific to tooling
     executeAnonymous(body: string, callback?: (err: Error, res: any) => void): Promise<any>;
 }
