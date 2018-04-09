@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "definitely-typed",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped",
   "repository": {
     "type": "git",
