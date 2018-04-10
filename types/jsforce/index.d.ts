@@ -6,6 +6,11 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.2
 
+import * as fs from 'fs';
+import * as stream from 'stream';
+import * as express from 'express';
+import * as glob from 'glob';
+
 export { Date } from './date-enum';
 export { Record } from './record';
 export { RecordResult } from './record-result';
@@ -20,4 +25,4 @@ export { Chatter, Request, RequestResult, BatchRequestResults, BatchRequestParam
     Resource, BatchRequestResult, RequestParams } from './api/chatter';
 export { Metadata, SaveResult, MetadataInfo, AsyncResult, RetrieveResultLocator, RetrieveRequest, FileProperties,
     ListMetadataQuery, DescribeMetadataResult, DeployOptions, AsyncResultLocator, RetrieveResult, MetadataObject,
-    DeployResult, DeployResultLocator, UpdateMetadataInfo, UpsertResult} from './api/metadata';
+    DeployResult, DeployResultLocator, UpdateMetadataInfo, UpsertResult } from './api/metadata';

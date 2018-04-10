@@ -1,6 +1,6 @@
 import { Connection, callback } from '../connection';
-import { Stream } from 'stream';
 import { Query } from '../query';
+import { Stream } from 'stream';
 
 interface BatchRequestParams extends RequestParams {
     method: string;
@@ -28,7 +28,7 @@ export class RequestResult {
 }
 
 export class Request<T> implements Promise<T> {
-    constructor(chatter: Chatter<T>, params: RequestParams);
+    constructor(chatter: Chatter, params: RequestParams);
 
     batchParams(): BatchRequestParams;
 
@@ -47,20 +47,20 @@ export class Request<T> implements Promise<T> {
 }
 
 export class Resource<T> extends Request<T> {
-    constructor(chatter: Chatter<T>, url: string, queryParams?: object);
+    constructor(chatter: Chatter, url: string, queryParams?: object);
 
     create(data: object, callback?: callback<RequestResult>): Request<RequestResult>;
 
-    del(callback?: callback<RequestResult>): Request<RequestResult>;
+    del(callback?: callback<T>): Request<T>;
 
-    delete(callback?: callback<RequestResult>): Request<RequestResult>;
+    delete(callback?: callback<T>): Request<T>;
 
-    retrieve(callback?: callback<Request<T>>): Request<T>;
+    retrieve(callback?: callback<T>): Request<T>;
 
-    update(data: object, callback?: callback<RequestResult>): Request<RequestResult>;
+    update(data: object, callback?: callback<T>): Request<T>;
 }
 
-export class Chatter<T> {
+export class Chatter {
     constructor(conn: Connection);
 
     batch(callback?: callback<BatchRequestResults>): Promise<BatchRequestResults>;

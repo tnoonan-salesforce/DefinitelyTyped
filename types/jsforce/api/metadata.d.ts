@@ -62,7 +62,7 @@ interface ListMetadataQuery {
 }
 
 interface MetadataInfo {
-    fullname: string;
+    fullName: string;
 }
 
 interface RetrieveRequest {
@@ -141,6 +141,8 @@ export class Metadata {
     checkRetrieveStatus(id: string, callback?: callback<RetrieveResult>): Promise<RetrieveResult>
 
     checkStatus(ids: string | string[], callback?: callback<AsyncResult>): AsyncResultLocator<AsyncResult>
+
+    create(type: string, metadata: MetadataInfo | MetadataInfo[], callback?: callback<SaveResult | SaveResult[]>): Promise<SaveResult | SaveResult[]>
 
     createAsync(type: string, metadata: MetadataInfo | MetadataInfo[], callback: callback<AsyncResult>): Promise<AsyncResultLocator<AsyncResult>>
 

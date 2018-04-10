@@ -6,6 +6,7 @@ import { RecordResult } from './record-result';
 import { SObject } from './salesforce-object';
 import { Analytics } from './api/analytics';
 import { Chatter } from './api/chatter';
+import { Metadata } from './api/metadata';
 
 export type callback<T> = (err: Error, result: T) => void;
 
@@ -54,15 +55,6 @@ export abstract class RestApi {
     patch(path: string, body: object, options: object, callback: () => object): Promise<object>;
     del(path: string, options: object, callback: () => object): Promise<object>;
 }
-
-export abstract class Apex extends RestApi {}
-
-export class Streaming {}
-export class Bulk {}
-export class Metadata {}
-export class SoapApi {}
-export class Process {}
-export class Cache {}
 
 export type ConnectionEvent = "refresh";
 
@@ -114,16 +106,10 @@ export abstract class BaseConnection extends EventEmitter {
 export class Connection extends BaseConnection {
     constructor(params: ConnectionOptions)
 
-    streaming: Streaming;
-    bulk: Bulk;
     tooling: Tooling;
     analytics: Analytics;
-    chatter: Chatter<any>;
+    chatter: Chatter;
     metadata: Metadata;
-    soap: SoapApi;
-    apex: Apex;
-    process: Process;
-    cache: Cache;
 
     // Specific to Connection
     instanceUrl: string;
