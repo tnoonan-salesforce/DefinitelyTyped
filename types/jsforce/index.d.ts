@@ -6,16 +6,18 @@
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.2
 
-import * as fs from 'fs';
-import * as stream from 'stream';
-import * as express from 'express';
-import * as glob from 'glob';
 export { Date } from './date-enum';
 export { Record } from './record';
 export { RecordResult } from './record-result';
-export { Connection, ConnectionOptions, RequestInfo, Tooling } from './connection';
+export { Connection, ConnectionOptions, RequestInfo, Tooling, callback } from './connection';
 export { SObject } from './salesforce-object';
 export { SalesforceId } from './salesforce-id';
 export { OAuth2, OAuth2Options } from './oauth2';
 export { Query, QueryResult } from './query';
 export { Promise } from './promise';
+export { Report, Dashboard, Analytics, ReportInstance } from './api/analytics';
+export { Chatter, Request, RequestResult, BatchRequestResults, BatchRequestParams,
+    Resource, BatchRequestResult, RequestParams } from './api/chatter';
+export { Metadata, SaveResult, MetadataInfo, AsyncResult, RetrieveResultLocator, RetrieveRequest, FileProperties,
+    ListMetadataQuery, DescribeMetadataResult, DeployOptions, AsyncResultLocator, RetrieveResult, MetadataObject,
+    DeployResult, DeployResultLocator, UpdateMetadataInfo, UpsertResult} from './api/metadata';

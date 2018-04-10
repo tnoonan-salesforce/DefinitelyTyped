@@ -1,11 +1,13 @@
-import { SObjectCreateOptions } from './create-options';
 import { EventEmitter } from 'events';
 import { DescribeSObjectResult, DescribeGlobalResult } from './describe-result';
 import { Query, QueryResult } from './query';
 import { Record } from './record';
 import { RecordResult } from './record-result';
 import { SObject } from './salesforce-object';
-import { Analytics } from './analytics';
+import { Analytics } from './api/analytics';
+import { Chatter } from './api/chatter';
+
+export type callback<T> = (err: Error, result: T) => void;
 
 // These are pulled out because according to http://jsforce.github.io/jsforce/doc/connection.js.html#line49
 // the oauth options can either be in the `oauth2` proeprty OR spread across the main connection
@@ -57,7 +59,6 @@ export abstract class Apex extends RestApi {}
 
 export class Streaming {}
 export class Bulk {}
-export class Chatter {}
 export class Metadata {}
 export class SoapApi {}
 export class Process {}
@@ -117,14 +118,13 @@ export class Connection extends BaseConnection {
     bulk: Bulk;
     tooling: Tooling;
     analytics: Analytics;
-    chatter: Chatter;
+    chatter: Chatter<any>;
     metadata: Metadata;
     soap: SoapApi;
     apex: Apex;
     process: Process;
     cache: Cache;
 
-    _logger: object;
     // Specific to Connection
     instanceUrl: string;
     version: string;
@@ -141,6 +141,8 @@ export class Connection extends BaseConnection {
 }
 
 export class Tooling extends BaseConnection {
+    _logger: any;
+
     // Specific to tooling
     executeAnonymous(body: string, callback?: (err: Error, res: any) => void): Promise<any>;
 }

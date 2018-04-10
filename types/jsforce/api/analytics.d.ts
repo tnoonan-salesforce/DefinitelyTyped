@@ -1,38 +1,82 @@
-interface ReportInfo {}
+import { callback } from '../connection';
+
+interface ReportInfo {
+}
 
 export class Dashboard {
-    describe(callback: () => any): Promise<any>;
-    del(callback: () => any): Promise<any>;
-    destory(callback: () => any): Promise<any>;
-    delete(callback: () => any): Promise<any>;
-    components(componentIds: () => any | string[] | string, callback: () => any): Promise<any>;
-    status(callback: () => any): Promise<any>;
-    refresh(callback: () =>  any): Promise<any>;
-    clone(name: string | object, folderid: string, callback: () => any): Promise<any>;
+    describe(callback?: callback<object>): Promise<any>;
+
+    del(callback?: callback<object>): Promise<any>;
+
+    destory(callback?: callback<object>): Promise<any>;
+
+    delete(callback?: callback<object>): Promise<any>;
+
+    components(componentIds: () => any | string[] | string, callback?: callback<object>): Promise<any>;
+
+    status(callback?: callback<object>): Promise<any>;
+
+    refresh(callback?: callback<object>): Promise<any>;
+
+    clone(name: string | object, folderid: string, callback?: callback<object>): Promise<any>;
 }
 
 export class ReportInstance {
-    retrieve(callback: () => any): Promise<any>
+    constructor(report: Report, id: string);
+
+    retrieve(callback: callback<ReportResult>): Promise<ReportResult>
 }
 
 export class Report {
-    describe(callback: () => any): Promise<any>;
-    del(callback: () => any): Promise<any>;
-    destory(callback: () => any): Promise<any>;
-    delete(callback: () => any): Promise<any>;
-    clone(name: string, callback: () => any): Promise<any>;
-    explain(callback: () => any): Promise<any>;
-    run(options: () => any | object, callback: () => any): Promise<any>;
-    exec(options: () => any | object, callback: () => any): Promise<any>;
-    execute(options: () => any | object, callback: () => any): Promise<any>;
-    executeAsync(options: () => any | object, callback: () => any): Promise<any>;
+    describe(callback?: callback<ReportMetadata>): Promise<ReportMetadata>;
+
+    del(callback?: callback<ReportResult>): Promise<ReportResult>;
+
+    destory(callback?: callback<ReportResult>): Promise<ReportResult>;
+
+    delete(callback?: callback<ReportResult>): Promise<ReportResult>;
+
+    clone(name: string, callback?: callback<ReportResult>): Promise<ReportResult>;
+
+    explain(callback?: callback<ExplainInfo>): Promise<ExplainInfo>;
+
+    run(options: () => any | object, callback?: callback<ReportResult>): Promise<ReportResult>;
+
+    exec(options: () => any | object, callback?: callback<ReportResult>): Promise<ReportResult>;
+
+    execute(options: () => any | object, callback?: callback<ReportResult>): Promise<ReportResult>;
+
+    executeAsync(options: () => any | object, callback?: callback<ReportInstanceAttrs>): Promise<ReportInstanceAttrs>;
+
     instance(id: string): ReportInstance;
-    instances(callback: () => any): any[];
+
+    instances(callback?: callback<ReportInstance[]>): Promise<ReportInstance[]>;
+}
+
+export interface ReportInstanceAttrs {
+}
+
+export interface ExplainInfo {
+}
+
+export interface ReportMetadata {
+}
+
+export interface ReportResult {
+}
+
+export interface ReportInfo {
+}
+
+export interface DashboardInfo {
 }
 
 export class Analytics {
     report(id: string): Promise<Report>;
-    reports(callback: () => ReportInfo[]): Promise<ReportInfo[]>;
+
+    reports(callback?: callback<ReportInfo[]>): Promise<ReportInfo[]>;
+
     dashboard(id: string): Promise<Dashboard>;
-    dashboards(callback: () => any[]): Promise<any>;
+
+    dashboards(callback?: callback<DashboardInfo[]>): Promise<DashboardInfo[]>;
 }
