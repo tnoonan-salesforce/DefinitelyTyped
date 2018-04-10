@@ -150,7 +150,7 @@ export class Metadata {
 
     del(type: string, metadata: string | string[] | MetadataInfo | MetadataInfo[], callback?: callback<AsyncResult>): AsyncResultLocator<AsyncResult>
 
-    delete(type: string, callback?: callback<SaveResult>): Promise<SaveResult>;
+    delete(type: string, fullNames: string | string[], callback?: callback<SaveResult>): Promise<SaveResult>;
 
     deleteAsync(type: string, metadata: string | string[] | MetadataInfo | MetadataInfo[], callback?: callback<AsyncResult>): AsyncResultLocator<AsyncResult>
 
