@@ -49,7 +49,7 @@ export class Request<T> implements Promise<T> {
 export class Resource<T> extends Request<T> {
     constructor(chatter: Chatter, url: string, queryParams?: object);
 
-    create(data: object, callback?: callback<RequestResult>): Request<RequestResult>;
+    create(data: object | string, callback?: callback<T>): Request<T>;
 
     del(callback?: callback<T>): Request<T>;
 

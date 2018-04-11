@@ -140,39 +140,39 @@ export class Metadata {
 
     checkRetrieveStatus(id: string, callback?: callback<RetrieveResult>): Promise<RetrieveResult>
 
-    checkStatus(ids: string | string[], callback?: callback<AsyncResult>): AsyncResultLocator<AsyncResult>
+    checkStatus(ids: string | string[], callback?: callback<AsyncResult | Array<AsyncResult>>): AsyncResultLocator<AsyncResult | Array<AsyncResult>>
 
-    create(type: string, metadata: MetadataInfo | MetadataInfo[], callback?: callback<SaveResult | SaveResult[]>): Promise<SaveResult | SaveResult[]>
+    create(type: string, metadata: MetadataInfo | Array<MetadataInfo>, callback?: callback<SaveResult | Array<SaveResult>>): Promise<SaveResult | Array<SaveResult>>
 
-    createAsync(type: string, metadata: MetadataInfo | MetadataInfo[], callback: callback<AsyncResult>): Promise<AsyncResultLocator<AsyncResult>>
+    createAsync(type: string, metadata: MetadataInfo | Array<MetadataInfo>, callback?: callback<SaveResult | Array<SaveResult>>): Promise<SaveResult | Array<SaveResult>>
 
-    createSync(type: string, metadata: MetadataInfo, callback?: callback<SaveResult>): SaveResult | SaveResult[]
+    createSync(type: string, metadata: MetadataInfo | Array<MetadataInfo>,  callback?: callback<SaveResult | Array<SaveResult>>): Promise<SaveResult | Array<SaveResult>>;
 
-    del(type: string, metadata: string | string[] | MetadataInfo | MetadataInfo[], callback?: callback<AsyncResult>): AsyncResultLocator<AsyncResult>
+    delete(type: string, fullNames: string | string[], callback?: callback<SaveResult | Array<SaveResult>>): Promise<SaveResult | Array<SaveResult>>;
 
-    delete(type: string, fullNames: string | string[], callback?: callback<SaveResult>): Promise<SaveResult>;
+    deleteAsync(type: string, metadata: string | string[] | MetadataInfo | Array<MetadataInfo>, callback?: callback<AsyncResult | Array<AsyncResult>>): AsyncResultLocator<AsyncResult | Array<AsyncResult>>
 
-    deleteAsync(type: string, metadata: string | string[] | MetadataInfo | MetadataInfo[], callback?: callback<AsyncResult>): AsyncResultLocator<AsyncResult>
-
-    deleteSync(type: string, fullNames: string | string[], callback?: callback<SaveResult>): Promise<SaveResult>;
+    deleteSync(type: string, fullNames: string | string[], callback?: callback<SaveResult | Array<SaveResult>>): Promise<SaveResult | Array<SaveResult>>;
 
     deploy(zipInput: Stream | Buffer | string, options: DeployOptions, callback?:callback<AsyncResult>): DeployResultLocator<AsyncResult>;
 
     describe(version?: string, callback?: callback<DescribeMetadataResult>): Promise<DescribeMetadataResult>;
 
-    list(queries: ListMetadataQuery | ListMetadataQuery[], version?: string, callback?: callback<FileProperties[]>): Promise<FileProperties[]>;
+    list(queries: ListMetadataQuery | Array<ListMetadataQuery>, version?: string, callback?: callback<Array<FileProperties>>): Promise<Array<FileProperties>>;
 
-    read(type: string, fullNames: string | string[], callback?: callback<MetadataInfo | MetadataInfo[]>): Promise<MetadataInfo | MetadataInfo[]>;
+    read(type: string, fullNames: string | string[], callback?: callback<MetadataInfo | Array<MetadataInfo>>): Promise<MetadataInfo | Array<MetadataInfo>>;
 
-    readSync(type: string, fullNames: string | string[], callback?: callback<MetadataInfo | MetadataInfo[]>): Promise<MetadataInfo | MetadataInfo[]>;
+    readSync(type: string, fullNames: string | string[], callback?: callback<MetadataInfo | Array<MetadataInfo>>): Promise<MetadataInfo | Array<MetadataInfo>>;
 
     rename(type: string, oldFullName: string, newFullName: string, callback?: callback<SaveResult>): Promise<SaveResult>
 
     retrieve(request: RetrieveRequest, callback: callback<AsyncResult>): RetrieveResultLocator<AsyncResult>
 
-    update(type: string, updateMetadata: MetadataInfo | MetadataInfo[], callback?: callback<SaveResult | SaveResult[]>): Promise<SaveResult | SaveResult[]>
+    update(type: string, updateMetadata: MetadataInfo | Array<MetadataInfo>, callback?: callback<SaveResult | Array<SaveResult>>): Promise<SaveResult | Array<SaveResult>>
 
-    updateSync(type: string, updateMetadata: MetadataInfo | MetadataInfo[], callback?: callback<SaveResult | SaveResult[]>): Promise<SaveResult | SaveResult[]>
+    updateAsync(type: string, updateMetadata: MetadataInfo, callback?: callback<AsyncResult | Array<AsyncResult>>): AsyncResultLocator<AsyncResult | Array<AsyncResult>>
 
-    upsert(type: string, metadata: MetadataInfo | MetadataInfo[], callback?: callback<UpsertResult | UpsertResult[]>): Promise<UpsertResult | UpsertResult[]>
+    updateSync(type: string, updateMetadata: MetadataInfo | Array<MetadataInfo>, callback?: callback<SaveResult | Array<SaveResult>>): Promise<SaveResult | Array<SaveResult>>
+
+    upsert(type: string, metadata: MetadataInfo | Array<MetadataInfo>, callback?: callback<UpsertResult | Array<UpsertResult>>): Promise<UpsertResult | Array<UpsertResult>>
 }
